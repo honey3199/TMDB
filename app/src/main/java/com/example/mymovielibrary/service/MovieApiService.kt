@@ -1,5 +1,6 @@
-package com.example.mymovielibrary
+package com.example.mymovielibrary.service
 
+import com.example.mymovielibrary.model.MovieProperties
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
@@ -11,13 +12,13 @@ import retrofit2.http.Query
 private const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 
 private val moshiBuilderObject = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    .add(KotlinJsonAdapterFactory())
+    .build()
 
 private val retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshiBuilderObject))
-        .baseUrl(BASE_URL)
-        .build()
+    .addConverterFactory(MoshiConverterFactory.create(moshiBuilderObject))
+    .baseUrl(BASE_URL)
+    .build()
 
 interface MovieApiService {
     @GET("popular")

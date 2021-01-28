@@ -1,4 +1,4 @@
-package com.example.mymovielibrary
+package com.example.mymovielibrary.model
 
 data class Result(
     val adult: Boolean,
