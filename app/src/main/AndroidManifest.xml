@@ -3,6 +3,7 @@
     package="com.example.mymovielibrary">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMovieLibrary">
+        <activity
+            android:name=".classForReview.ItemListActivity"
+            android:label="@string/title_item_list"
+            android:theme="@style/Theme.MyMovieLibrary.NoActionBar"></activity>
+        <activity
+            android:name=".classForReview.ItemDetailActivity"
+            android:label="@string/title_item_detail"
+            android:parentActivityName=".classForReview.ItemListActivity"
+            android:theme="@style/Theme.MyMovieLibrary.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.mymovielibrary.classForReview.ItemListActivity" />
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
