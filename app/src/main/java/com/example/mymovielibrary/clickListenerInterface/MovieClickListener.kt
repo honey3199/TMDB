@@ -1,7 +1,7 @@
 package com.example.mymovielibrary.clickListenerInterface
 
-import com.example.mymovielibrary.model.Result
+import com.example.mymovielibrary.model.Movie
 
 interface MovieClickListener {
-    fun movieClickListener(result: Result)
+    fun movieClickListener(result: Movie)
 }

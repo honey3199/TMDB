@@ -23,15 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="0.9"
-        android:textStyle="bold"
         android:enabled="false"
         android:maxLines="1"
         android:paddingStart="4dp"
         android:text="Something"
         android:textColor="@color/white"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/movie_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

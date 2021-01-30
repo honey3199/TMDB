@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.model.MovieProperties
-import com.example.mymovielibrary.model.Result
 import com.example.mymovielibrary.service.MovieApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,8 +18,8 @@ class HomePageViewModel : ViewModel() {
     private var _serverResponse = MutableLiveData<String>()
     val serverResponse: LiveData<String> = _serverResponse
 
-    private val _property = MutableLiveData<List<Result>>()
-    val property: LiveData<List<Result>> = _property
+    private val _movieProperties = MutableLiveData<List<Movie>>()
+    val movieProperties: LiveData<List<Movie>> = _movieProperties
 
     init {
         suspendMethodCaller()
@@ -30,20 +30,20 @@ class HomePageViewModel : ViewModel() {
     }
 
     private suspend fun getAllMovies() = withContext(Dispatchers.IO) {
-        MovieApi.retrofitService.getProperties("65db5aebb7dc29d77c7b00443904e829")
-            .enqueue(object : Callback<MovieProperties> {
-                override fun onFailure(call: Call<MovieProperties>, t: Throwable) {
-                    _serverResponse.postValue("Failure: " + t.message)
-                }
+        MovieApi.retrofitService.getMovies("65db5aebb7dc29d77c7b00443904e829")
+                .enqueue(object : Callback<MovieProperties> {
+                    override fun onFailure(call: Call<MovieProperties>, t: Throwable) {
+                        _serverResponse.postValue("Failure: " + t.message)
+                    }
 
-                override fun onResponse(
-                    call: Call<MovieProperties>,
-                    response: Response<MovieProperties>
-                ) {
-                    val response = response.body()
-                    if (response != null)
-                        _property.postValue(response.results)
-                }
-            })
+                    override fun onResponse(
+                            call: Call<MovieProperties>,
+                            response: Response<MovieProperties>
+                    ) {
+                        val response = response.body()
+                        if (response != null)
+                            _movieProperties.postValue(response.results)
+                    }
+                })
     }
 }

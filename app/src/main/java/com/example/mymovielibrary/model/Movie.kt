@@ -3,22 +3,22 @@ package com.example.mymovielibrary.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Result(
-    val adult: Boolean,
-    val backdrop_path: String,
-    val genre_ids: List<Int>,
-    val id: Int,
-    val original_language: String,
-    val original_title: String,
-    val overview: String,
-    val popularity: Double,
-    val poster_path: String,
-    val release_date: String,
-    val title: String,
-    val video: Boolean,
-    val vote_average: Double,
-    val vote_count: Int
-):Parcelable {
+data class Movie(
+        val adult: Boolean,
+        val backdrop_path: String,
+        val genre_ids: List<Int>,
+        val id: Int,
+        val original_language: String,
+        val original_title: String,
+        val overview: String,
+        val popularity: Double,
+        val poster_path: String,
+        val release_date: String,
+        val title: String,
+        val video: Boolean,
+        val vote_average: Double,
+        val vote_count: Int
+) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readByte() != 0.toByte(),
             parcel.readString().toString(),
@@ -56,12 +56,12 @@ data class Result(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Result> {
-        override fun createFromParcel(parcel: Parcel): Result {
-            return Result(parcel)
+    companion object CREATOR : Parcelable.Creator<Movie> {
+        override fun createFromParcel(parcel: Parcel): Movie {
+            return Movie(parcel)
         }
 
-        override fun newArray(size: Int): Array<Result?> {
+        override fun newArray(size: Int): Array<Movie?> {
             return arrayOfNulls(size)
         }
     }

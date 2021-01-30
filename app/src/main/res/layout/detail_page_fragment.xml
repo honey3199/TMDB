@@ -27,7 +27,7 @@
             <ImageView
                 android:id="@+id/movie_picture_detail_page"
                 android:layout_width="match_parent"
-                android:layout_height="225dp"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_text"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background"
@@ -36,32 +36,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/movie_name_detail_page"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.9"
-                android:enabled="false"
-                android:gravity="bottom"
-                android:maxLines="1"
-                android:paddingStart="4dp"
-                android:paddingBottom="8dp"
-                android:text="Title"
-                android:textColor="@color/text_black_color"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/movie_picture_detail_page"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -178,16 +159,15 @@
                         android:textColor="@color/black"
                         android:textSize="35sp" />
 
-                    <!--<androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_for_trailers"
                         android:layout_width="wrap_content"
-                        android:nestedScrollingEnabled="false"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:scrollbars="horizontal"
+                        android:nestedScrollingEnabled="false"
                         android:orientation="horizontal"
-                        tools:listitem="@layout/trailer" />-->
-
+                        android:scrollbars="horizontal"
+                        tools:listitem="@layout/trailer" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -202,7 +182,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_for_trailers" />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/text_view_for_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -210,8 +190,18 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_review" />
+                app:layout_constraintTop_toBottomOf="@id/text_review" />-->
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_for_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                android:scrollbars="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_review"
+                tools:listitem="@layout/review" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

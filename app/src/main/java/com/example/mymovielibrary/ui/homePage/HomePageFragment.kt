@@ -1,12 +1,11 @@
 package com.example.mymovielibrary.ui.homePage
 
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.MovieLibraryAdapter
 import com.example.mymovielibrary.clickListenerInterface.MovieClickListener
-import com.example.mymovielibrary.model.Result
+import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.ui.descriptionPage.DetailPageFragment
 
 
@@ -23,9 +22,12 @@ class HomePageFragment : Fragment(), MovieClickListener {
     private lateinit var viewModel: HomePageViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
+
+        activity?.findViewById<Toolbar>(R.id.toolbar_layout)?.title = getString(R.string.app_name)
+
         val view = inflater.inflate(R.layout.home_page_fragment, container, false)
 
         viewModel = ViewModelProvider(requireActivity()).get(HomePageViewModel::class.java)
@@ -41,7 +43,7 @@ class HomePageFragment : Fragment(), MovieClickListener {
             }
         }
 
-        viewModel.property.observe(viewLifecycleOwner) {
+        viewModel.movieProperties.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 movieAdapter.setData(it)
                 Log.d("Response: ", " $it")
@@ -50,9 +52,9 @@ class HomePageFragment : Fragment(), MovieClickListener {
         return view
     }
 
-    override fun movieClickListener(result: Result) {
+    override fun movieClickListener(result: Movie) {
         activity?.supportFragmentManager?.commit {
-            this.replace(R.id.main_fragment,DetailPageFragment.build(result))
+            this.replace(R.id.main_fragment, DetailPageFragment.build(result))
         }
 
         /*childFragmentManager.commit {
