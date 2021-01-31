@@ -1,16 +1,13 @@
 package com.example.mymovielibrary.ui.descriptionPage
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.core.app.NavUtils.navigateUpTo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +19,6 @@ import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.MovieReviewAdapter
 import com.example.mymovielibrary.adapter.MovieTrailerAdapter
 import com.example.mymovielibrary.model.Movie
-import com.example.mymovielibrary.ui.homePage.HomePageFragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
 class DetailPageFragment() : Fragment() {
@@ -45,18 +41,17 @@ class DetailPageFragment() : Fragment() {
         val movieRating = view.findViewById<RatingBar>(R.id.movie_rating)
         val movieSynopsis = view.findViewById<TextView>(R.id.text_synopsis)
 
-//        movieNameInImage.text = movie.title
         Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
                 .apply(
                         RequestOptions()
-                                .override(Target.SIZE_ORIGINAL, 500)
+                                .override(Target.SIZE_ORIGINAL, 800)
                 )
                 .into(moviePicture)
 
         movieTitle.text = movie.title
         movieReleasingYear.text = movie.release_date
-        movieRating.rating = movie.vote_average.toFloat() / 2
+        movieRating.rating = (movie.vote_average.toFloat() / 2.0).toFloat()
         movieSynopsis.text = movie.overview
 
         val trailerAdapter = MovieTrailerAdapter()
@@ -78,6 +73,12 @@ class DetailPageFragment() : Fragment() {
             }
         }
 
+        viewModel.movieId.observe(viewLifecycleOwner) {
+            if (it == 0) {
+                viewModel.getMovieId(movie.id)
+            }
+        }
+
         viewModel.reviewProperties.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 reviewAdapter.setReviews(it)
@@ -86,7 +87,7 @@ class DetailPageFragment() : Fragment() {
         }
 
         viewModel.movieId.observe(viewLifecycleOwner) {
-            if (it==0) {
+            if (it == 0) {
                 viewModel.getMovieId(movie.id)
             }
         }
@@ -106,8 +107,6 @@ class DetailPageFragment() : Fragment() {
         requireActivity().actionBar?.setDisplayHomeAsUpEnabled(true)
 
         activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = movie.title
-        viewModel = ViewModelProvider(this).get(DetailPageViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     companion object {
@@ -120,12 +119,12 @@ class DetailPageFragment() : Fragment() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) =
+    /*override fun onOptionsItemSelected(item: MenuItem) =
             when (item.itemId) {
                 android.R.id.home -> {
                     navigateUpTo(requireActivity(), Intent(requireActivity(), HomePageFragment()::class.java))
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
-            }
+            }*/
 }

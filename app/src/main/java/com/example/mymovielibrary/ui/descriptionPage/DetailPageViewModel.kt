@@ -16,7 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailPageViewModel : ViewModel() {
+abstract class DetailPageViewModel : ViewModel() {
 
     private var _serverResponse = MutableLiveData<String>()
     val serverResponse: LiveData<String> = _serverResponse
@@ -30,16 +30,17 @@ class DetailPageViewModel : ViewModel() {
     private val _movieId = MutableLiveData<Int>()
     val movieId: LiveData<Int> = _movieId
 
+
     init {
         _movieId.postValue(0)
         suspendMethodCaller()
+        _movieId.postValue(0)
     }
 
     private fun suspendMethodCaller() = viewModelScope.launch {
         getAllReviews()
-        getAllTrailers()
+        //getAllTrailers()
     }
-
 
     private suspend fun getAllReviews() = withContext(Dispatchers.IO) {
         MovieApi.retrofitService.getReviews("$movieId", "65db5aebb7dc29d77c7b00443904e829")
