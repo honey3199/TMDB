@@ -86,12 +86,6 @@ class DetailPageFragment() : Fragment() {
             }
         }
 
-        viewModel.movieId.observe(viewLifecycleOwner) {
-            if (it == 0) {
-                viewModel.getMovieId(movie.id)
-            }
-        }
-
         viewModel.trailerProperties.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 trailerAdapter.setTrailers(it)
