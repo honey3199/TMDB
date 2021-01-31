@@ -27,7 +27,11 @@ class DetailPageViewModel : ViewModel() {
     private val _trailerProperties = MutableLiveData<List<Trailer>>()
     val trailerProperties: LiveData<List<Trailer>> = _trailerProperties
 
+    private val _movieId = MutableLiveData<Int>()
+    val movieId: LiveData<Int> = _movieId
+
     init {
+        _movieId.postValue(0)
         suspendMethodCaller()
     }
 
@@ -36,7 +40,6 @@ class DetailPageViewModel : ViewModel() {
         getAllTrailers()
     }
 
-    val movieId = fun(id: Int) = id
 
     private suspend fun getAllReviews() = withContext(Dispatchers.IO) {
         MovieApi.retrofitService.getReviews("$movieId", "65db5aebb7dc29d77c7b00443904e829")
@@ -66,5 +69,9 @@ class DetailPageViewModel : ViewModel() {
                             _trailerProperties.postValue(response.results)
                     }
                 })
+    }
+
+    fun getMovieId(movieId: Int) {
+        _movieId.postValue(movieId)
     }
 }

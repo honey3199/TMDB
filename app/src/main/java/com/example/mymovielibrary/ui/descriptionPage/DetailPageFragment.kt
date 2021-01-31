@@ -59,7 +59,6 @@ class DetailPageFragment() : Fragment() {
         movieRating.rating = movie.vote_average.toFloat() / 2
         movieSynopsis.text = movie.overview
 
-        viewModel.movieId(movie.id)
         val trailerAdapter = MovieTrailerAdapter()
         val recyclerViewTrailer: RecyclerView = view.findViewById(R.id.recycler_view_for_trailers)
         recyclerViewTrailer.adapter = trailerAdapter
@@ -83,6 +82,12 @@ class DetailPageFragment() : Fragment() {
             if (!it.isNullOrEmpty()) {
                 reviewAdapter.setReviews(it)
                 Log.d("Response: ", " $it")
+            }
+        }
+
+        viewModel.movieId.observe(viewLifecycleOwner) {
+            if (it==0) {
+                viewModel.getMovieId(movie.id)
             }
         }
 
