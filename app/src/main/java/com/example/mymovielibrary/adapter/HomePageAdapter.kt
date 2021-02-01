@@ -8,8 +8,8 @@ import com.example.mymovielibrary.clickListenerInterface.MovieClickListener
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.viewHolder.MovieLibraryViewHolder
 
-class MovieLibraryAdapter(private val movieClickListener: MovieClickListener) : RecyclerView.Adapter<MovieLibraryViewHolder>() {
-    private var myMovieList = mutableListOf<Movie>()
+class HomePageAdapter(private val movieClickListener: MovieClickListener) : RecyclerView.Adapter<MovieLibraryViewHolder>() {
+    private var movieList = mutableListOf<Movie>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieLibraryViewHolder {
         val adapterLayout =
                 LayoutInflater.from(parent.context).inflate(R.layout.movie, parent, false)
@@ -17,16 +17,16 @@ class MovieLibraryAdapter(private val movieClickListener: MovieClickListener) : 
     }
 
     override fun onBindViewHolder(holder: MovieLibraryViewHolder, position: Int) {
-        holder.setMovieDataToList(myMovieList[position])
+        holder.setMovieDataToList(movieList[position])
         holder.itemView.setOnClickListener {
-            movieClickListener.movieClickListener(myMovieList[position])
+            movieClickListener.onMovieClickListener(movieList[position])
         }
     }
 
-    override fun getItemCount() = myMovieList.size
+    override fun getItemCount() = movieList.size
 
-    fun setData(movie: List<Movie>) {
-        myMovieList.addAll(movie)
+    fun setMovieData(movie: List<Movie>) {
+        movieList.addAll(movie)
         notifyDataSetChanged()
     }
 }

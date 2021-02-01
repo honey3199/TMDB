@@ -21,11 +21,7 @@ class HomePageViewModel : ViewModel() {
     private val _movieProperties = MutableLiveData<List<Movie>>()
     val movieProperties: LiveData<List<Movie>> = _movieProperties
 
-    init {
-        suspendMethodCaller()
-    }
-
-    private fun suspendMethodCaller() = viewModelScope.launch {
+    fun fetchMovies() = viewModelScope.launch {
         getAllMovies()
     }
 
@@ -40,8 +36,7 @@ class HomePageViewModel : ViewModel() {
                             call: Call<MovieProperties>,
                             response: Response<MovieProperties>
                     ) {
-                        if (response != null)
-                            _movieProperties.postValue(response.body()?.results)
+                        _movieProperties.postValue(response.body()?.results)
                     }
                 })
     }

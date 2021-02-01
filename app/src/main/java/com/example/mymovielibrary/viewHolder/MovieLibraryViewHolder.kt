@@ -16,7 +16,7 @@ class MovieLibraryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
                 .apply(
                         RequestOptions()
-                                .override(SIZE_ORIGINAL, 500)
+                                .override(SIZE_ORIGINAL, 800)
                 )
                 .into(imageMovie)
     }

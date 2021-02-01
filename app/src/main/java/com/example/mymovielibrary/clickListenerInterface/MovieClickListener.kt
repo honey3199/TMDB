@@ -3,5 +3,5 @@ package com.example.mymovielibrary.clickListenerInterface
 import com.example.mymovielibrary.model.Movie
 
 interface MovieClickListener {
-    fun movieClickListener(result: Movie)
+    fun onMovieClickListener(result: Movie)
 }

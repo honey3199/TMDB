@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovielibrary.R
-import com.example.mymovielibrary.adapter.MovieLibraryAdapter
+import com.example.mymovielibrary.adapter.HomePageAdapter
 import com.example.mymovielibrary.clickListenerInterface.MovieClickListener
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.ui.descriptionPage.DetailPageFragment
@@ -31,7 +31,9 @@ class HomePageFragment : Fragment(), MovieClickListener {
         val view = inflater.inflate(R.layout.home_page_fragment, container, false)
 
         viewModel = ViewModelProvider(requireActivity()).get(HomePageViewModel::class.java)
-        val movieAdapter = MovieLibraryAdapter(this)
+        viewModel.fetchMovies()
+
+        val movieAdapter = HomePageAdapter(this)
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_movie_list)
         recyclerView.adapter = movieAdapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 2)
@@ -45,21 +47,16 @@ class HomePageFragment : Fragment(), MovieClickListener {
 
         viewModel.movieProperties.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
-                movieAdapter.setData(it)
+                movieAdapter.setMovieData(it)
                 Log.d("Response: ", " $it")
             }
         }
         return view
     }
 
-    override fun movieClickListener(result: Movie) {
+    override fun onMovieClickListener(result: Movie) {
         activity?.supportFragmentManager?.commit {
             this.replace(R.id.main_fragment, DetailPageFragment.build(result))
         }
-
-        /*childFragmentManager.commit {
-            this.replace(R.id.main_fragment,DetailPageFragment.build(result))
-        }
-        childFragmentManager.beginTransaction().replace(R.id.main_fragment,DetailPageFragment()).commit()*/
     }
 }

@@ -21,7 +21,7 @@ class MovieReviewAdapter : RecyclerView.Adapter<MovieReviewViewHolder>() {
 
     override fun getItemCount(): Int = movieReviewList.size
 
-    fun setReviews(review: List<Review>) {
+    fun setReviewData(review: List<Review>) {
         movieReviewList.addAll(review)
         notifyDataSetChanged()
     }

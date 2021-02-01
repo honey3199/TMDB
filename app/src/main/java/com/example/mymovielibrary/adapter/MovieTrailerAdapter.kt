@@ -9,7 +9,7 @@ import com.example.mymovielibrary.model.Trailer
 import com.example.mymovielibrary.viewHolder.MovieTrailerViewHolder
 
 class MovieTrailerAdapter(private val trailerClickListener: TrailerClickListener) : RecyclerView.Adapter<MovieTrailerViewHolder>() {
-    private var myTrailerList = mutableListOf<Trailer>()
+    private var movieTrailerList = mutableListOf<Trailer>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieTrailerViewHolder {
         val adapterLayout =
                 LayoutInflater.from(parent.context).inflate(R.layout.trailer, parent, false)
@@ -17,16 +17,16 @@ class MovieTrailerAdapter(private val trailerClickListener: TrailerClickListener
     }
 
     override fun onBindViewHolder(holder: MovieTrailerViewHolder, position: Int) {
-        holder.setTrailerDataToList(myTrailerList[position])
+        holder.setTrailerDataToList(movieTrailerList[position])
         holder.itemView.setOnClickListener {
-            trailerClickListener.onTrailerClickListener(myTrailerList[position].key)
+            trailerClickListener.onTrailerClickListener(movieTrailerList[position].key)
         }
     }
 
-    override fun getItemCount(): Int = myTrailerList.size
+    override fun getItemCount(): Int = movieTrailerList.size
 
-    fun setTrailers(trailer: List<Trailer>) {
-        myTrailerList.addAll(trailer)
+    fun setTrailerData(trailer: List<Trailer>) {
+        movieTrailerList.addAll(trailer)
         notifyDataSetChanged()
     }
 }

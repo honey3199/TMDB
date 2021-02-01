@@ -40,8 +40,7 @@ class DetailPageViewModel : ViewModel() {
                     }
 
                     override fun onResponse(call: Call<ReviewProperties>, response: Response<ReviewProperties>) {
-                        if (response != null)
-                            _reviewProperties.postValue(response.body()?.reviews)
+                        _reviewProperties.postValue(response.body()?.reviews)
                     }
                 })
     }
@@ -54,8 +53,7 @@ class DetailPageViewModel : ViewModel() {
                     }
 
                     override fun onResponse(call: Call<TrailerProperties>, response: Response<TrailerProperties>) {
-                        if (response != null)
-                            _trailerProperties.postValue(response.body()?.results)
+                        _trailerProperties.postValue(response.body()?.results)
                     }
                 })
     }
