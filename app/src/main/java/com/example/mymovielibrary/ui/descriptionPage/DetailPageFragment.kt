@@ -18,10 +18,11 @@ import com.bumptech.glide.request.target.Target
 import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.MovieReviewAdapter
 import com.example.mymovielibrary.adapter.MovieTrailerAdapter
+import com.example.mymovielibrary.clickListenerInterface.TrailerClickListener
 import com.example.mymovielibrary.model.Movie
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
-class DetailPageFragment() : Fragment() {
+class DetailPageFragment() : Fragment(), TrailerClickListener {
 
     private lateinit var movie: Movie
     private lateinit var viewModel: DetailPageViewModel
@@ -54,7 +55,7 @@ class DetailPageFragment() : Fragment() {
         movieRating.rating = (movie.vote_average.toFloat() / 2.0).toFloat()
         movieSynopsis.text = movie.overview
 
-        val trailerAdapter = MovieTrailerAdapter()
+        val trailerAdapter = MovieTrailerAdapter(this)
         val recyclerViewTrailer: RecyclerView = view.findViewById(R.id.recycler_view_for_trailers)
         recyclerViewTrailer.adapter = trailerAdapter
         recyclerViewTrailer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -66,16 +67,11 @@ class DetailPageFragment() : Fragment() {
         recyclerViewReview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerViewReview.smoothScrollBy(0, 0)
 
+        viewModel.fetchMovieId(movie.id)
 
         viewModel.serverResponse.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 Log.d("Response: ", " $it")
-            }
-        }
-
-        viewModel.movieId.observe(viewLifecycleOwner) {
-            if (it == 0) {
-                viewModel.getMovieId(movie.id)
             }
         }
 
@@ -113,12 +109,7 @@ class DetailPageFragment() : Fragment() {
 
     }
 
-    /*override fun onOptionsItemSelected(item: MenuItem) =
-            when (item.itemId) {
-                android.R.id.home -> {
-                    navigateUpTo(requireActivity(), Intent(requireActivity(), HomePageFragment()::class.java))
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
-            }*/
+    override fun onTrailerClickListener(key: String) {
+        Log.d("inTrailerClick", "onTrailerClickListener: $key")
+    }
 }

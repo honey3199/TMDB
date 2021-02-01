@@ -16,7 +16,7 @@ class MovieReviewAdapter : RecyclerView.Adapter<MovieReviewViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieReviewViewHolder, position: Int) {
-        holder.setDataToList(movieReviewList[position])
+        holder.setReviewDataToList(movieReviewList[position])
     }
 
     override fun getItemCount(): Int = movieReviewList.size

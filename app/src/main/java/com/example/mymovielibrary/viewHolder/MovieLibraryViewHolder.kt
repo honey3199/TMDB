@@ -11,7 +11,7 @@ import com.example.mymovielibrary.model.Movie
 
 class MovieLibraryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val imageMovie: ImageView = view.findViewById(R.id.movie_picture)
-    fun setDataToList(movie: Movie) {
+    fun setMovieDataToList(movie: Movie) {
         Glide.with(itemView)
                 .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
                 .apply(

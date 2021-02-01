@@ -8,7 +8,7 @@ import com.example.mymovielibrary.model.Review
 
 class MovieReviewViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val textViewReview = view.findViewById<TextView>(R.id.text_view_for_reviews)
-    fun setDataToList(review: Review) {
+    fun setReviewDataToList(review: Review) {
         textViewReview.text = review.content
     }
 }

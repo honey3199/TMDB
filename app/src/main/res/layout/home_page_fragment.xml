@@ -15,5 +15,4 @@
     <include
         android:id="@+id/home_page_fragment_layout"
         layout="@layout/layout_home_page" />
-
 </FrameLayout>

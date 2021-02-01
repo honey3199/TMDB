@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovielibrary.R
+import com.example.mymovielibrary.clickListenerInterface.TrailerClickListener
 import com.example.mymovielibrary.model.Trailer
 import com.example.mymovielibrary.viewHolder.MovieTrailerViewHolder
 
-class MovieTrailerAdapter : RecyclerView.Adapter<MovieTrailerViewHolder>() {
+class MovieTrailerAdapter(private val trailerClickListener: TrailerClickListener) : RecyclerView.Adapter<MovieTrailerViewHolder>() {
     private var myTrailerList = mutableListOf<Trailer>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieTrailerViewHolder {
         val adapterLayout =
@@ -16,7 +17,10 @@ class MovieTrailerAdapter : RecyclerView.Adapter<MovieTrailerViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieTrailerViewHolder, position: Int) {
-        holder.setDataToList(myTrailerList[position])
+        holder.setTrailerDataToList(myTrailerList[position])
+        holder.itemView.setOnClickListener {
+            trailerClickListener.onTrailerClickListener(myTrailerList[position].key)
+        }
     }
 
     override fun getItemCount(): Int = myTrailerList.size

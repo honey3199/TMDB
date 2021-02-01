@@ -27,52 +27,40 @@ class DetailPageViewModel : ViewModel() {
     private val _trailerProperties = MutableLiveData<List<Trailer>>()
     val trailerProperties: LiveData<List<Trailer>> = _trailerProperties
 
-    private val _movieId = MutableLiveData<Int>()
-    val movieId: LiveData<Int> = _movieId
-
-
-    init {
-        _movieId.postValue(0)
-        suspendMethodCaller()
-        _movieId.postValue(0)
+    fun fetchMovieId(id: Int) = viewModelScope.launch {
+        getAllReviews(id)
+        getAllTrailers(id)
     }
 
-    private fun suspendMethodCaller() = viewModelScope.launch {
-        getAllReviews()
-        //getAllTrailers()
-    }
-
-    private suspend fun getAllReviews() = withContext(Dispatchers.IO) {
-        MovieApi.retrofitService.getReviews("$movieId", "65db5aebb7dc29d77c7b00443904e829")
+    private suspend fun getAllReviews(id: Int) = withContext(Dispatchers.IO) {
+        MovieApi.retrofitService.getReviews("$id", API_KEY)
                 .enqueue(object : Callback<ReviewProperties> {
                     override fun onFailure(call: Call<ReviewProperties>, t: Throwable) {
                         _serverResponse.postValue("Failure: " + t.message)
                     }
 
                     override fun onResponse(call: Call<ReviewProperties>, response: Response<ReviewProperties>) {
-                        val response = response.body()
                         if (response != null)
-                            _reviewProperties.postValue(response.reviews)
+                            _reviewProperties.postValue(response.body()?.reviews)
                     }
                 })
     }
 
-    private suspend fun getAllTrailers() = withContext(Dispatchers.IO) {
-        MovieApi.retrofitService.getTrailers("$movieId", "65db5aebb7dc29d77c7b00443904e829")
+    private suspend fun getAllTrailers(id: Int) = withContext(Dispatchers.IO) {
+        MovieApi.retrofitService.getTrailers("$id", API_KEY)
                 .enqueue(object : Callback<TrailerProperties> {
                     override fun onFailure(call: Call<TrailerProperties>, t: Throwable) {
                         _serverResponse.postValue("Failure: " + t.message)
                     }
 
                     override fun onResponse(call: Call<TrailerProperties>, response: Response<TrailerProperties>) {
-                        val response = response.body()
                         if (response != null)
-                            _trailerProperties.postValue(response.results)
+                            _trailerProperties.postValue(response.body()?.results)
                     }
                 })
     }
 
-    fun getMovieId(movieId: Int) {
-        _movieId.postValue(movieId)
+    companion object {
+        const val API_KEY = "65db5aebb7dc29d77c7b00443904e829"
     }
 }

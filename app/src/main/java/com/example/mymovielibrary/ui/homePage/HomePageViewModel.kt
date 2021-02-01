@@ -30,7 +30,7 @@ class HomePageViewModel : ViewModel() {
     }
 
     private suspend fun getAllMovies() = withContext(Dispatchers.IO) {
-        MovieApi.retrofitService.getMovies("65db5aebb7dc29d77c7b00443904e829")
+        MovieApi.retrofitService.getMovies(API_KEY)
                 .enqueue(object : Callback<MovieProperties> {
                     override fun onFailure(call: Call<MovieProperties>, t: Throwable) {
                         _serverResponse.postValue("Failure: " + t.message)
@@ -40,10 +40,13 @@ class HomePageViewModel : ViewModel() {
                             call: Call<MovieProperties>,
                             response: Response<MovieProperties>
                     ) {
-                        val response = response.body()
                         if (response != null)
-                            _movieProperties.postValue(response.results)
+                            _movieProperties.postValue(response.body()?.results)
                     }
                 })
+    }
+
+    companion object {
+        const val API_KEY = "65db5aebb7dc29d77c7b00443904e829"
     }
 }
