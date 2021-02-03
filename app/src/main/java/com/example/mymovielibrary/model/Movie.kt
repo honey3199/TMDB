@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "movie_entity")
 data class Movie(
@@ -23,7 +24,7 @@ data class Movie(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-) : Parcelable {
+) : Serializable, Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readByte() != 0.toByte(),
         parcel.readString().toString(),

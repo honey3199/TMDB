@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mymovielibrary">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,20 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMovieLibrary">
+
         <activity
-            android:name=".classForReview.ItemListActivity"
-            android:label="@string/title_item_list"
-            android:theme="@style/Theme.MyMovieLibrary.NoActionBar"></activity>
-        <activity
-            android:name=".classForReview.ItemDetailActivity"
-            android:label="@string/title_item_detail"
-            android:parentActivityName=".classForReview.ItemListActivity"
+            android:name=".MovieDetailPage"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.MyMovieLibrary.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.mymovielibrary.classForReview.ItemListActivity" />
+                android:value="com.example.mymovielibrary.MainActivity" />
         </activity>
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyMovieLibrary.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

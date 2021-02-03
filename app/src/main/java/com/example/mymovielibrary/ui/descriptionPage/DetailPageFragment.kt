@@ -12,6 +12,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,9 +32,11 @@ import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.viewModelFactory.DetailPageViewModelFactory
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
+
 class DetailPageFragment : Fragment(), TrailerClickListener {
 
-    private lateinit var movie: Movie
+    private var movie: Movie? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,38 +52,26 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
             DetailPageViewModelFactory(repository)
         }
 
-        movie = arguments?.get(MOVIES) as Movie
+        /*val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.detail_toolbar)
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)*/
 
-        val moviePicture = view.findViewById<ImageView>(R.id.movie_picture_detail_page)
+        val extras: Bundle? = requireActivity().intent.getExtras()
+        movie = extras?.getParcelable("movie_id")
+
+
         val movieTitle = view.findViewById<TextView>(R.id.movie_title)
         val movieReleasingYear = view.findViewById<TextView>(R.id.movie_year)
         val movieRating = view.findViewById<RatingBar>(R.id.movie_rating)
         val movieSynopsis = view.findViewById<TextView>(R.id.text_synopsis)
-        val floatingActionButton = view.findViewById<ImageButton>(R.id.floting_action_button)
 
-        floatingActionButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.favorite_border
-            )
-        );
 
-        floatingActionButton.setOnClickListener {
-            viewModel.onLikeButtonClicked(movie)
+        movieTitle.text = movie?.title
+        movieReleasingYear.text = movie?.release_date
+        if (movie != null) {
+            movieRating.rating = (movie?.vote_average?.toFloat()?.div(2.0))?.toFloat() ?: 0.0f
         }
 
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
-            .apply(
-                RequestOptions()
-                    .override(Target.SIZE_ORIGINAL, 800)
-            )
-            .into(moviePicture)
-
-        movieTitle.text = movie.title
-        movieReleasingYear.text = movie.release_date
-        movieRating.rating = (movie.vote_average.toFloat() / 2.0).toFloat()
-        movieSynopsis.text = movie.overview
+        movieSynopsis.text = movie?.overview
 
         val trailerAdapter = MovieTrailerAdapter(this)
         val recyclerViewTrailer: RecyclerView = view.findViewById(R.id.recycler_view_for_trailers)
@@ -95,26 +87,7 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerViewReview.smoothScrollBy(0, 0)
 
-        viewModel.fetchMovieId(movie.id)
-        viewModel.movieFetch(movie)
-
-        viewModel.isMovieExist.observe(viewLifecycleOwner) {
-            if (it)
-                floatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.favorite_fill
-                    )
-                );
-            else
-                floatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.favorite_border
-                    )
-                );
-
-        }
+        movie?.id?.let { viewModel.fetchMovieId(it) }
 
         viewModel.serverResponse.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
@@ -141,20 +114,8 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        requireActivity().actionBar?.setDisplayHomeAsUpEnabled(true)
-
-        activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = movie.title
     }
 
-    companion object {
-        const val MOVIES = "MOVIES"
-        fun build(result: Movie) = DetailPageFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(MOVIES, result)
-            }
-        }
-
-    }
 
     override fun onTrailerClickListener(key: String) {
         Log.d("inTrailerClick", "onTrailerClickListener: $key")
