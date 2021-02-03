@@ -6,7 +6,6 @@ import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
@@ -50,7 +49,7 @@ class MovieDetailPage : AppCompatActivity() {
             )
             .into(moviePicture)
 
-        val floatingActionButton = findViewById<ImageButton>(R.id.floting_action_button)
+        val floatingActionButton = findViewById<ImageButton>(R.id.floating_action_button)
 
         floatingActionButton.setImageDrawable(
             ContextCompat.getDrawable(

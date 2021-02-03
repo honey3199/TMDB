@@ -27,18 +27,18 @@ class HomePageViewModel : ViewModel() {
 
     private suspend fun getAllMovies() = withContext(Dispatchers.IO) {
         MovieApi.retrofitService.getMovies(API_KEY)
-                .enqueue(object : Callback<MovieProperties> {
-                    override fun onFailure(call: Call<MovieProperties>, t: Throwable) {
-                        _serverResponse.postValue("Failure: " + t.message)
-                    }
+            .enqueue(object : Callback<MovieProperties> {
+                override fun onFailure(call: Call<MovieProperties>, t: Throwable) {
+                    _serverResponse.postValue("Failure: " + t.message)
+                }
 
-                    override fun onResponse(
-                            call: Call<MovieProperties>,
-                            response: Response<MovieProperties>
-                    ) {
-                        _movieProperties.postValue(response.body()?.results)
-                    }
-                })
+                override fun onResponse(
+                    call: Call<MovieProperties>,
+                    response: Response<MovieProperties>
+                ) {
+                    _movieProperties.postValue(response.body()?.results)
+                }
+            })
     }
 
     companion object {

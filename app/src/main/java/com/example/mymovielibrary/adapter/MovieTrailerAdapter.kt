@@ -8,11 +8,12 @@ import com.example.mymovielibrary.clickListenerInterface.TrailerClickListener
 import com.example.mymovielibrary.model.Trailer
 import com.example.mymovielibrary.viewHolder.MovieTrailerViewHolder
 
-class MovieTrailerAdapter(private val trailerClickListener: TrailerClickListener) : RecyclerView.Adapter<MovieTrailerViewHolder>() {
+class MovieTrailerAdapter(private val trailerClickListener: TrailerClickListener) :
+    RecyclerView.Adapter<MovieTrailerViewHolder>() {
     private var movieTrailerList = mutableListOf<Trailer>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieTrailerViewHolder {
         val adapterLayout =
-                LayoutInflater.from(parent.context).inflate(R.layout.trailer, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.trailer, parent, false)
         return MovieTrailerViewHolder(adapterLayout)
     }
 

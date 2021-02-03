@@ -8,11 +8,12 @@ import com.example.mymovielibrary.clickListenerInterface.MovieClickListener
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.viewHolder.MovieLibraryViewHolder
 
-class HomePageAdapter(private val movieClickListener: MovieClickListener) : RecyclerView.Adapter<MovieLibraryViewHolder>() {
+class HomePageAdapter(private val movieClickListener: MovieClickListener) :
+    RecyclerView.Adapter<MovieLibraryViewHolder>() {
     private var movieList = mutableListOf<Movie>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieLibraryViewHolder {
         val adapterLayout =
-                LayoutInflater.from(parent.context).inflate(R.layout.movie, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.movie, parent, false)
         return MovieLibraryViewHolder(adapterLayout)
     }
 

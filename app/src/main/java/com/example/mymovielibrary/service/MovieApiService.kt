@@ -15,24 +15,29 @@ import retrofit2.http.Query
 private const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 
 private val moshiBuilderObject = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    .add(KotlinJsonAdapterFactory())
+    .build()
 
 private val retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshiBuilderObject))
-        .baseUrl(BASE_URL)
-        .build()
+    .addConverterFactory(MoshiConverterFactory.create(moshiBuilderObject))
+    .baseUrl(BASE_URL)
+    .build()
 
 interface MovieApiService {
     @GET("popular")
     fun getMovies(@Query("api_key") key: String): Call<MovieProperties>
 
     @GET("{id}/reviews")
-    fun getReviews(@Path("id") id: String, @Query("api_key") api_key: String): Call<ReviewProperties>
+    fun getReviews(
+        @Path("id") id: String,
+        @Query("api_key") api_key: String
+    ): Call<ReviewProperties>
 
     @GET("{id}/videos")
-    fun getTrailers(@Path("id") id: String, @Query("api_key") api_key: String): Call<TrailerProperties>
-
+    fun getTrailers(
+        @Path("id") id: String,
+        @Query("api_key") api_key: String
+    ): Call<TrailerProperties>
 }
 
 object MovieApi {

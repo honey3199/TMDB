@@ -8,20 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.MovieReviewAdapter
 import com.example.mymovielibrary.adapter.MovieTrailerAdapter
@@ -30,13 +22,9 @@ import com.example.mymovielibrary.data.repositoryImplementation.MovieRepositoryI
 import com.example.mymovielibrary.databse.MovieDatabase
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.viewModelFactory.DetailPageViewModelFactory
-import com.google.android.material.appbar.CollapsingToolbarLayout
-
 
 class DetailPageFragment : Fragment(), TrailerClickListener {
-
     private var movie: Movie? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,18 +40,13 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
             DetailPageViewModelFactory(repository)
         }
 
-        /*val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.detail_toolbar)
-        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)*/
-
-        val extras: Bundle? = requireActivity().intent.getExtras()
+        val extras: Bundle? = requireActivity().intent.extras
         movie = extras?.getParcelable("movie_id")
-
 
         val movieTitle = view.findViewById<TextView>(R.id.movie_title)
         val movieReleasingYear = view.findViewById<TextView>(R.id.movie_year)
         val movieRating = view.findViewById<RatingBar>(R.id.movie_rating)
         val movieSynopsis = view.findViewById<TextView>(R.id.text_synopsis)
-
 
         movieTitle.text = movie?.title
         movieReleasingYear.text = movie?.release_date
@@ -111,14 +94,8 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
-
-
     override fun onTrailerClickListener(key: String) {
         Log.d("inTrailerClick", "onTrailerClickListener: $key")
-        startActivity(Intent(ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + key)))
+        startActivity(Intent(ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=$key")))
     }
 }

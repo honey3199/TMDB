@@ -6,12 +6,12 @@ import com.example.mymovielibrary.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MovieRepositoryImpl(val movieDao: MovieDao) : MovieRepository {
+class MovieRepositoryImpl(private val movieDao: MovieDao) : MovieRepository {
     override suspend fun insertMovieInMovieEntity(movie: Movie) = withContext(Dispatchers.IO) {
         movieDao.insertMovie(movie)
     }
 
-    override suspend fun checkMovieExist(movieId: Int) : Movie = withContext(Dispatchers.IO){
+    override suspend fun checkMovieExist(movieId: Int): Movie = withContext(Dispatchers.IO) {
         return@withContext movieDao.isMovieExists(movieId)
     }
 

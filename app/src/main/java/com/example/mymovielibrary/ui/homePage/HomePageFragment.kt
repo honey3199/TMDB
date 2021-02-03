@@ -25,7 +25,6 @@ class HomePageFragment : Fragment(), MovieClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         activity?.findViewById<Toolbar>(R.id.toolbar_layout)?.title = getString(R.string.app_name)
 
         val view = inflater.inflate(R.layout.home_page_fragment, container, false)

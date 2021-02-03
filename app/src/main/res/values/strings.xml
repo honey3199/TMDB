@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">My Movie Library</string>
     <string name="content_description_text">MovieImage</string>
-    <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
+    <string name="tv_year_text">2020</string>
+    <string name="tv_movie_title_text">Title</string>
+    <string name="tv_synopsis_text">Synopsis</string>
+    <string name="trailers_text">Trailers</string>
+    <string name="review_text">Review</string>
 </resources>

@@ -22,9 +22,10 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_text"
         android:src="@drawable/youtube_icon"
-        app:layout_constraintTop_toTopOf="@id/video_view_for_trailer"
-        app:layout_constraintStart_toStartOf="@id/video_view_for_trailer"
+        app:layout_constraintBottom_toBottomOf="@id/video_view_for_trailer"
         app:layout_constraintEnd_toEndOf="@id/video_view_for_trailer"
-        app:layout_constraintBottom_toBottomOf="@id/video_view_for_trailer"/>
+        app:layout_constraintStart_toStartOf="@id/video_view_for_trailer"
+        app:layout_constraintTop_toTopOf="@id/video_view_for_trailer" />
 </androidx.constraintlayout.widget.ConstraintLayout>

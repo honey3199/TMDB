@@ -13,11 +13,11 @@ class MovieLibraryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val imageMovie: ImageView = view.findViewById(R.id.movie_picture)
     fun setMovieDataToList(movie: Movie) {
         Glide.with(itemView)
-                .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
-                .apply(
-                        RequestOptions()
-                                .override(SIZE_ORIGINAL, 800)
-                )
-                .into(imageMovie)
+            .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
+            .apply(
+                RequestOptions()
+                    .override(SIZE_ORIGINAL, 800)
+            )
+            .into(imageMovie)
     }
 }

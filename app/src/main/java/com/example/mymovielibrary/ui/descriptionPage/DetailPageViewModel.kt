@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailPageViewModel(val repository: MovieRepository) : ViewModel() {
+class DetailPageViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private var _serverResponse = MutableLiveData<String>()
     val serverResponse: LiveData<String> = _serverResponse
@@ -29,7 +29,7 @@ class DetailPageViewModel(val repository: MovieRepository) : ViewModel() {
     private val _trailerProperties = MutableLiveData<List<Trailer>>()
     val trailerProperties: LiveData<List<Trailer>> = _trailerProperties
 
-    private val _isMovieExist = MutableLiveData<Boolean>(false)
+    private val _isMovieExist = MutableLiveData(false)
     val isMovieExist: LiveData<Boolean> = _isMovieExist
 
     fun fetchMovieId(id: Int) = viewModelScope.launch {
@@ -70,7 +70,7 @@ class DetailPageViewModel(val repository: MovieRepository) : ViewModel() {
     }
 
     fun movieFetch(movie: Movie) = viewModelScope.launch {
-        if (repository.checkMovieExist(movie.id)==null)
+        if (repository.checkMovieExist(movie.id) == null)
             _isMovieExist.postValue(false)
         else
             _isMovieExist.postValue(true)

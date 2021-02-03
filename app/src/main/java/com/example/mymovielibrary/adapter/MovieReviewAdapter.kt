@@ -11,7 +11,7 @@ class MovieReviewAdapter : RecyclerView.Adapter<MovieReviewViewHolder>() {
     private var movieReviewList = mutableListOf<Review>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieReviewViewHolder {
         val adapterLayout =
-                LayoutInflater.from(parent.context).inflate(R.layout.review, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.review, parent, false)
         return MovieReviewViewHolder(adapterLayout)
     }
 
