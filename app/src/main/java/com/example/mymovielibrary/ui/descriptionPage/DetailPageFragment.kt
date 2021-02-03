@@ -1,4 +1,5 @@
 package com.example.mymovielibrary.ui.descriptionPage
+
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
@@ -28,16 +29,14 @@ import com.example.mymovielibrary.databse.MovieDatabase
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.viewModelFactory.DetailPageViewModelFactory
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class DetailPageFragment : Fragment(), TrailerClickListener {
 
     private lateinit var movie: Movie
-    private lateinit var viewModel: DetailPageViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         val database by lazy { MovieDatabase.getDatabase(requireContext()) }
@@ -57,20 +56,25 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
         val movieRating = view.findViewById<RatingBar>(R.id.movie_rating)
         val movieSynopsis = view.findViewById<TextView>(R.id.text_synopsis)
         val floatingActionButton = view.findViewById<ImageButton>(R.id.floting_action_button)
-        floatingActionButton.setImageDrawable(ContextCompat.getDrawable(requireContext(),
-                R.drawable.favorite_border));
+
+        floatingActionButton.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.favorite_border
+            )
+        );
 
         floatingActionButton.setOnClickListener {
-            viewModel.insertMovieData(movie)
+            viewModel.onLikeButtonClicked(movie)
         }
 
         Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
-                .apply(
-                        RequestOptions()
-                                .override(Target.SIZE_ORIGINAL, 800)
-                )
-                .into(moviePicture)
+            .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)
+            .apply(
+                RequestOptions()
+                    .override(Target.SIZE_ORIGINAL, 800)
+            )
+            .into(moviePicture)
 
         movieTitle.text = movie.title
         movieReleasingYear.text = movie.release_date
@@ -80,16 +84,37 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
         val trailerAdapter = MovieTrailerAdapter(this)
         val recyclerViewTrailer: RecyclerView = view.findViewById(R.id.recycler_view_for_trailers)
         recyclerViewTrailer.adapter = trailerAdapter
-        recyclerViewTrailer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewTrailer.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerViewTrailer.smoothScrollBy(0, 0)
 
         val reviewAdapter = MovieReviewAdapter()
         val recyclerViewReview: RecyclerView = view.findViewById(R.id.recycler_view_for_reviews)
         recyclerViewReview.adapter = reviewAdapter
-        recyclerViewReview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerViewReview.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerViewReview.smoothScrollBy(0, 0)
 
         viewModel.fetchMovieId(movie.id)
+        viewModel.movieFetch(movie)
+
+        viewModel.isMovieExist.observe(viewLifecycleOwner) {
+            if (it)
+                floatingActionButton.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.favorite_fill
+                    )
+                );
+            else
+                floatingActionButton.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.favorite_border
+                    )
+                );
+
+        }
 
         viewModel.serverResponse.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {

@@ -10,4 +10,12 @@ class MovieRepositoryImpl(val movieDao: MovieDao) : MovieRepository {
     override suspend fun insertMovieInMovieEntity(movie: Movie) = withContext(Dispatchers.IO) {
         movieDao.insertMovie(movie)
     }
+
+    override suspend fun checkMovieExist(movieId: Int) : Movie = withContext(Dispatchers.IO){
+        return@withContext movieDao.isMovieExists(movieId)
+    }
+
+    override suspend fun deleteMovieFromMovieEntity(movie: Movie) = withContext(Dispatchers.IO) {
+        movieDao.deleteMovie(movie)
+    }
 }
