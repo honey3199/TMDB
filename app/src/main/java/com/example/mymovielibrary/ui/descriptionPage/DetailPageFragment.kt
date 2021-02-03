@@ -1,5 +1,4 @@
 package com.example.mymovielibrary.ui.descriptionPage
-
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
@@ -8,12 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -23,7 +23,10 @@ import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.MovieReviewAdapter
 import com.example.mymovielibrary.adapter.MovieTrailerAdapter
 import com.example.mymovielibrary.clickListenerInterface.TrailerClickListener
+import com.example.mymovielibrary.data.repositoryImplementation.MovieRepositoryImpl
+import com.example.mymovielibrary.databse.MovieDatabase
 import com.example.mymovielibrary.model.Movie
+import com.example.mymovielibrary.viewModelFactory.DetailPageViewModelFactory
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -37,8 +40,15 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
             savedInstanceState: Bundle?
     ): View? {
 
+        val database by lazy { MovieDatabase.getDatabase(requireContext()) }
+        val repository by lazy { MovieRepositoryImpl(database.movieDao()) }
+
         val view = inflater.inflate(R.layout.detail_page_fragment, container, false)
-        viewModel = ViewModelProvider(this).get(DetailPageViewModel::class.java)
+
+        val viewModel: DetailPageViewModel by viewModels {
+            DetailPageViewModelFactory(repository)
+        }
+
         movie = arguments?.get(MOVIES) as Movie
 
         val moviePicture = view.findViewById<ImageView>(R.id.movie_picture_detail_page)
@@ -46,9 +56,13 @@ class DetailPageFragment : Fragment(), TrailerClickListener {
         val movieReleasingYear = view.findViewById<TextView>(R.id.movie_year)
         val movieRating = view.findViewById<RatingBar>(R.id.movie_rating)
         val movieSynopsis = view.findViewById<TextView>(R.id.text_synopsis)
-        val floatingActionButton = view.findViewById<FloatingActionButton>(R.id.floting_action_button)
+        val floatingActionButton = view.findViewById<ImageButton>(R.id.floting_action_button)
         floatingActionButton.setImageDrawable(ContextCompat.getDrawable(requireContext(),
                 R.drawable.favorite_border));
+
+        floatingActionButton.setOnClickListener {
+            viewModel.insertMovieData(movie)
+        }
 
         Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w185" + movie.poster_path)

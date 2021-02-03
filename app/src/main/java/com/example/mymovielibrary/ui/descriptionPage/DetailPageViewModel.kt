@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mymovielibrary.data.repository.MovieRepository
+import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.model.Review
 import com.example.mymovielibrary.model.ReviewProperties
 import com.example.mymovielibrary.model.Trailer
@@ -16,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailPageViewModel : ViewModel() {
+class DetailPageViewModel(val repository: MovieRepository) : ViewModel() {
 
     private var _serverResponse = MutableLiveData<String>()
     val serverResponse: LiveData<String> = _serverResponse
@@ -30,6 +32,10 @@ class DetailPageViewModel : ViewModel() {
     fun fetchMovieId(id: Int) = viewModelScope.launch {
         getAllReviews(id)
         getAllTrailers(id)
+    }
+
+    fun insertMovieData(movie: Movie) = viewModelScope.launch {
+        repository.insertMovieInMovieEntity(movie)
     }
 
     private suspend fun getAllReviews(id: Int) = withContext(Dispatchers.IO) {
