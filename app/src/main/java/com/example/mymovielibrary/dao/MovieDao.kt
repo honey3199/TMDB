@@ -13,7 +13,7 @@ interface MovieDao {
     fun insertMovie(movie: Movie)
 
     @Query("SELECT * FROM movie_entity WHERE id = :movieId")
-    fun isMovieExists(movieId: Int): Movie
+    fun isMovieExists(movieId: Int): Movie?
 
     @Delete
     fun deleteMovie(movie: Movie)

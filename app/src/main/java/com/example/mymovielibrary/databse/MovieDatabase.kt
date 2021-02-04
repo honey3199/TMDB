@@ -24,7 +24,6 @@ abstract class MovieDatabase : RoomDatabase() {
                     "movie_database"
                 ).build()
                 INSTANCE = instance
-                // return instance
                 instance
             }
 

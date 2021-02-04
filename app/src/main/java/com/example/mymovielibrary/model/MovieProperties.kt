@@ -1,5 +1,3 @@
 package com.example.mymovielibrary.model
 
-data class MovieProperties(
-        val results: List<Movie>
-)
+data class MovieProperties(val results: List<Movie>)

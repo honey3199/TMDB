@@ -23,14 +23,14 @@ class MovieDetailPage : AppCompatActivity() {
 
         val movie = intent.getParcelableExtra<Movie>("movie_id")
 
-//      ActionBar Code
+        // ActionBar Code
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.detail_toolbar)
         setSupportActionBar(toolbar)
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = movie?.title
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
 
-//      ViewModel Factory Access
+        // ViewModel Factory Access
         val database by lazy { MovieDatabase.getDatabase(applicationContext) }
         val repository by lazy { MovieRepositoryImpl(database.movieDao()) }
 
@@ -65,19 +65,18 @@ class MovieDetailPage : AppCompatActivity() {
                         applicationContext,
                         R.drawable.favorite_fill
                     )
-                );
+                )
             else
                 floatingActionButton.setImageDrawable(
                     ContextCompat.getDrawable(
                         applicationContext,
                         R.drawable.favorite_border
                     )
-                );
-
+                )
         }
 
         floatingActionButton.setOnClickListener {
-            movie?.let { it1 -> viewModel.onLikeButtonClicked(it1) }
+            movie?.let { viewModel.onLikeButtonClicked(it) }
         }
     }
 

@@ -11,7 +11,7 @@ class MovieRepositoryImpl(private val movieDao: MovieDao) : MovieRepository {
         movieDao.insertMovie(movie)
     }
 
-    override suspend fun checkMovieExist(movieId: Int): Movie = withContext(Dispatchers.IO) {
+    override suspend fun checkMovieExist(movieId: Int): Movie? = withContext(Dispatchers.IO) {
         return@withContext movieDao.isMovieExists(movieId)
     }
 

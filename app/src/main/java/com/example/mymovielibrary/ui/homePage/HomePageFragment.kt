@@ -17,7 +17,6 @@ import com.example.mymovielibrary.adapter.HomePageAdapter
 import com.example.mymovielibrary.clickListenerInterface.MovieClickListener
 import com.example.mymovielibrary.model.Movie
 
-
 class HomePageFragment : Fragment(), MovieClickListener {
     private lateinit var viewModel: HomePageViewModel
 
