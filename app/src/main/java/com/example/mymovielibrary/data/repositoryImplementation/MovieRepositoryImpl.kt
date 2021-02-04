@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MovieRepositoryImpl(private val movieDao: MovieDao) : MovieRepository {
-    override suspend fun insertMovieInMovieEntity(movie: Movie) = withContext(Dispatchers.IO) {
+    override suspend fun insertMovie(movie: Movie) = withContext(Dispatchers.IO) {
         movieDao.insertMovie(movie)
     }
 
@@ -15,7 +15,7 @@ class MovieRepositoryImpl(private val movieDao: MovieDao) : MovieRepository {
         return@withContext movieDao.isMovieExists(movieId)
     }
 
-    override suspend fun deleteMovieFromMovieEntity(movie: Movie) = withContext(Dispatchers.IO) {
+    override suspend fun deleteMovie(movie: Movie) = withContext(Dispatchers.IO) {
         movieDao.deleteMovie(movie)
     }
 }

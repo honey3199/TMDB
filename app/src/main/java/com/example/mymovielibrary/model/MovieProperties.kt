@@ -1,3 +1,5 @@
 package com.example.mymovielibrary.model
 
-data class MovieProperties(val results: List<Movie>)
+import com.squareup.moshi.Json
+
+data class MovieProperties(@Json(name = "results")val movies: List<Movie>)

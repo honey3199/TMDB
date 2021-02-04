@@ -7,7 +7,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "movie_entity")
+@Entity(tableName = "movie_table")
 data class Movie(
     val adult: Boolean,
     val backdrop_path: String,

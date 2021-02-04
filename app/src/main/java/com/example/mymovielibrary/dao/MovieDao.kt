@@ -12,7 +12,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: Movie)
 
-    @Query("SELECT * FROM movie_entity WHERE id = :movieId")
+    @Query("SELECT * FROM movie_table WHERE id = :movieId")
     fun isMovieExists(movieId: Int): Movie?
 
     @Delete

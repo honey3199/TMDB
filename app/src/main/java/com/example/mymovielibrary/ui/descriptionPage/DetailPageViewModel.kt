@@ -64,7 +64,7 @@ class DetailPageViewModel(private val repository: MovieRepository) : ViewModel()
                     call: Call<TrailerProperties>,
                     response: Response<TrailerProperties>
                 ) {
-                    _trailerProperties.postValue(response.body()?.results)
+                    _trailerProperties.postValue(response.body()?.trailers)
                 }
             })
     }
@@ -78,10 +78,10 @@ class DetailPageViewModel(private val repository: MovieRepository) : ViewModel()
 
     fun onLikeButtonClicked(movie: Movie) = viewModelScope.launch {
         if (isMovieExist.value == false) {
-            repository.insertMovieInMovieEntity(movie)
+            repository.insertMovie(movie)
             _isMovieExist.postValue(true)
         } else {
-            repository.deleteMovieFromMovieEntity(movie)
+            repository.deleteMovie(movie)
             _isMovieExist.postValue(false)
         }
     }

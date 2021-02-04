@@ -36,7 +36,7 @@ class HomePageViewModel : ViewModel() {
                     call: Call<MovieProperties>,
                     response: Response<MovieProperties>
                 ) {
-                    _movieProperties.postValue(response.body()?.results)
+                    _movieProperties.postValue(response.body()?.movies)
                 }
             })
     }

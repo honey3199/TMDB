@@ -1,6 +1,9 @@
 package com.example.mymovielibrary.model
 
+import com.squareup.moshi.Json
+
 data class TrailerProperties(
         val id: Int,
-        val results: List<Trailer>
+        @Json(name = "results")
+        val trailers: List<Trailer>
 )
