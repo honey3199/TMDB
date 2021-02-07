@@ -82,4 +82,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+
+
+    // (Required) Writing and executing Unit Tests on the JUnit Platform
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$testVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$testVersion"
+    testImplementation "io.mockk:mockk:1.9.3"
+    testImplementation "com.google.truth:truth:1.1.2"
 }

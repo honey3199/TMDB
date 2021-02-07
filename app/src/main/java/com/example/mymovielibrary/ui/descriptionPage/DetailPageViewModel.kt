@@ -76,7 +76,7 @@ class DetailPageViewModel(private val repository: MovieRepository) : ViewModel()
             _isMovieExist.postValue(true)
     }
 
-    fun onLikeButtonClicked(movie: Movie) = viewModelScope.launch {
+    fun handledInsertAndDelete(movie: Movie) = viewModelScope.launch {
         if (isMovieExist.value == false) {
             repository.insertMovie(movie)
             _isMovieExist.postValue(true)

@@ -12,6 +12,7 @@ buildscript {
         lifecycleVersion = "2.2.0"
         coroutines = "1.3.9"
         activityVersion = "1.1.0"
+        testVersion = "5.7.0"
     }
     repositories {
         google()

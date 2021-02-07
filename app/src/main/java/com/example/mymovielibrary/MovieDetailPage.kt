@@ -76,7 +76,7 @@ class MovieDetailPage : AppCompatActivity() {
         }
 
         floatingActionButton.setOnClickListener {
-            movie?.let { viewModel.onLikeButtonClicked(it) }
+            movie?.let { viewModel.handledInsertAndDelete(it) }
         }
     }
 
