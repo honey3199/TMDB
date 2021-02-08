@@ -89,4 +89,7 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$testVersion"
     testImplementation "io.mockk:mockk:1.9.3"
     testImplementation "com.google.truth:truth:1.1.2"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+
 }

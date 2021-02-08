@@ -29,7 +29,7 @@ class DetailPageViewModel(private val repository: MovieRepository) : ViewModel()
     private val _trailerProperties = MutableLiveData<List<Trailer>>()
     val trailerProperties: LiveData<List<Trailer>> = _trailerProperties
 
-    private val _isMovieExist = MutableLiveData(false)
+    private val _isMovieExist = MutableLiveData<Boolean>()
     val isMovieExist: LiveData<Boolean> = _isMovieExist
 
     fun fetchMovieId(id: Int) = viewModelScope.launch {
