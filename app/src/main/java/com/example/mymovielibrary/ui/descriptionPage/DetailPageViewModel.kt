@@ -11,6 +11,7 @@ import com.example.mymovielibrary.model.ReviewProperties
 import com.example.mymovielibrary.model.Trailer
 import com.example.mymovielibrary.model.TrailerProperties
 import com.example.mymovielibrary.service.MovieApi
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailPageViewModel(private val repository: MovieRepository) : ViewModel() {
+class DetailPageViewModel @Inject constructor(val repository: MovieRepository) : ViewModel() {
 
     private var _serverResponse = MutableLiveData<String>()
     val serverResponse: LiveData<String> = _serverResponse

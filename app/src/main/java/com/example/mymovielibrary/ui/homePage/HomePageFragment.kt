@@ -11,14 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mymovielibrary.MovieDetailPage
+import com.example.mymovielibrary.DetailPageActivity
 import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.HomePageAdapter
 import com.example.mymovielibrary.clickListenerInterface.MovieClickListener
 import com.example.mymovielibrary.model.Movie
+import com.example.mymovielibrary.viewModelFactory.ViewModelFactory
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class HomePageFragment : Fragment(), MovieClickListener {
+class HomePageFragment : DaggerFragment(), MovieClickListener {
     private lateinit var viewModel: HomePageViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +34,7 @@ class HomePageFragment : Fragment(), MovieClickListener {
 
         val view = inflater.inflate(R.layout.home_page_fragment, container, false)
 
-        viewModel = ViewModelProvider(requireActivity()).get(HomePageViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HomePageViewModel::class.java)
         viewModel.fetchMovies()
 
         val movieAdapter = HomePageAdapter(this)
@@ -53,7 +59,7 @@ class HomePageFragment : Fragment(), MovieClickListener {
     }
 
     override fun onMovieClickListener(result: Movie) {
-        val intent = Intent(this.activity, MovieDetailPage::class.java)
+        val intent = Intent(this.activity, DetailPageActivity::class.java)
         val mBundle = Bundle()
         mBundle.putParcelable("movie_id", result)
         intent.putExtras(mBundle)
