@@ -13,7 +13,6 @@ import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
-
 @Singleton
 @Component(
     modules = [
@@ -26,6 +25,7 @@ import javax.inject.Singleton
         AppModule::class
     ]
 )
+
 interface AppComponent {
     @Component.Builder
     interface Builder {
@@ -34,6 +34,5 @@ interface AppComponent {
 
         fun build(): AppComponent
     }
-
     fun inject(movieApplication: MovieApplication)
 }

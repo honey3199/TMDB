@@ -37,7 +37,6 @@ class DetailPageFragment : DaggerFragment(), TrailerClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.detail_page_fragment, container, false)
-
         val viewModel: DetailPageViewModel by viewModels {
             viewModelFactory
         }

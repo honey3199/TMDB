@@ -4,6 +4,8 @@ import com.example.mymovielibrary.dao.MovieDao
 import com.example.mymovielibrary.data.repository.MovieRepository
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.model.MovieProperties
+import com.example.mymovielibrary.model.ReviewProperties
+import com.example.mymovielibrary.model.TrailerProperties
 import com.example.mymovielibrary.service.MovieApiService
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -31,5 +33,13 @@ class MovieRepositoryImpl @Inject constructor(
            return@withContext api.getAllMovies(key)
         }
 
+    override suspend fun fetchAllReviews(id: String, key: String): Response<ReviewProperties> =
+        withContext(Dispatchers.IO){
+            return@withContext api.getAllReviews(id,key)
+    }
 
+    override suspend fun fetchAllTrailers(id: String, key: String): Response<TrailerProperties> =
+        withContext(Dispatchers.IO){
+            return@withContext api.getAllTrailers(id,key)
+    }
 }
