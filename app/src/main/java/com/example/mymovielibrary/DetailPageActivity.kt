@@ -22,6 +22,8 @@ class DetailPageActivity : DaggerAppCompatActivity() {
     private lateinit var detailPageBinding: ActivityMovieDetailPageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //View Binding
         detailPageBinding = ActivityMovieDetailPageBinding.inflate(layoutInflater)
         setContentView(detailPageBinding.root)
 

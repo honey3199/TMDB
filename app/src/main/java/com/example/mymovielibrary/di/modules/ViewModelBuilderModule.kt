@@ -12,7 +12,6 @@ import dagger.multibindings.IntoMap
 
 @Module
 interface ViewModelBuilderModule {
-
     @Binds
     @IntoMap
     @ViewModelKey(HomePageViewModel::class)

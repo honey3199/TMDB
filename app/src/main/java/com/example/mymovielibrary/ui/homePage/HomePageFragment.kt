@@ -21,9 +21,11 @@ import javax.inject.Inject
 class HomePageFragment : DaggerFragment(), MovieClickListener {
     private lateinit var viewModel: HomePageViewModel
 
+    //Dagger Code
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    //View Binding
     private var _homePageFragmentBinding: LayoutHomePageBinding? = null
     private val homePageFragmentBinding get() = _homePageFragmentBinding!!
 

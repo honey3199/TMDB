@@ -7,7 +7,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 interface FragmentBuilderModule {
-
     @ContributesAndroidInjector
     fun contributeHomePageFragment():HomePageFragment
 

@@ -7,7 +7,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 interface ActivityBuilderModule {
-
     @ContributesAndroidInjector
     fun contributeHomePageActivity():HomePageActivity
 

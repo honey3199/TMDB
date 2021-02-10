@@ -9,7 +9,6 @@ import com.example.mymovielibrary.model.Movie
 
 @Database(entities = [Movie::class], version = 2, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
-
     abstract fun movieDao(): MovieDao
 
     companion object {

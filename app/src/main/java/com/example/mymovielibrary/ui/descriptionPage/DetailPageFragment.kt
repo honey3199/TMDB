@@ -27,6 +27,7 @@ class DetailPageFragment : DaggerFragment(), TrailerClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    //View Binding
     private var _detailPageFragmentBinding: DetailPageFragmentBinding? = null
     private val detailPageFragmentBinding get() = _detailPageFragmentBinding!!
 

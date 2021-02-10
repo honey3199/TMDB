@@ -9,7 +9,6 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
-
     @Provides
     @Singleton
     fun provideContext(application: Application): Context = application
