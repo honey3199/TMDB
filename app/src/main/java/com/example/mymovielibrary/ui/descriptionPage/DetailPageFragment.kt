@@ -21,23 +21,24 @@ import com.example.mymovielibrary.clickListenerInterface.TrailerClickListener
 import com.example.mymovielibrary.data.repositoryImplementation.MovieRepositoryImpl
 import com.example.mymovielibrary.databse.MovieDatabase
 import com.example.mymovielibrary.model.Movie
-import com.example.mymovielibrary.viewModelFactory.DetailPageViewModelFactory
+import com.example.mymovielibrary.viewModelFactory.ViewModelFactory
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class DetailPageFragment : Fragment(), TrailerClickListener {
+class DetailPageFragment : DaggerFragment(), TrailerClickListener {
     private var movie: Movie? = null
+
+    //Dagger Code
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val database by lazy { MovieDatabase.getDatabase(requireContext()) }
-        val repository by lazy { MovieRepositoryImpl(database.movieDao()) }
-
         val view = inflater.inflate(R.layout.detail_page_fragment, container, false)
-
         val viewModel: DetailPageViewModel by viewModels {
-            DetailPageViewModelFactory(repository)
+            viewModelFactory
         }
 
         val extras: Bundle? = requireActivity().intent.extras

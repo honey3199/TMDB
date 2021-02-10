@@ -9,14 +9,22 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.example.mymovielibrary.data.repositoryImplementation.MovieRepositoryImpl
-import com.example.mymovielibrary.databse.MovieDatabase
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.ui.descriptionPage.DetailPageViewModel
-import com.example.mymovielibrary.viewModelFactory.DetailPageViewModelFactory
+import com.example.mymovielibrary.viewModelFactory.ViewModelFactory
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-class MovieDetailPage : AppCompatActivity() {
+class DetailPageActivity : DaggerAppCompatActivity() {
+
+    //Dagger Code
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail_page)
@@ -30,12 +38,8 @@ class MovieDetailPage : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
 
-        // ViewModel Factory Access
-        val database by lazy { MovieDatabase.getDatabase(applicationContext) }
-        val repository by lazy { MovieRepositoryImpl(database.movieDao()) }
-
         val viewModel: DetailPageViewModel by viewModels {
-            DetailPageViewModelFactory(repository)
+            viewModelFactory
         }
 
         movie?.let { viewModel.movieFetch(it) }
@@ -76,7 +80,7 @@ class MovieDetailPage : AppCompatActivity() {
         }
 
         floatingActionButton.setOnClickListener {
-            movie?.let { viewModel.onLikeButtonClicked(it) }
+            movie?.let { viewModel.handledInsertAndDelete(it) }
         }
     }
 

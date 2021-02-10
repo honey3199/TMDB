@@ -6,40 +6,26 @@ import com.example.mymovielibrary.model.TrailerProperties
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val BASE_URL = "https://api.themoviedb.org/3/movie/"
-
-private val moshiBuilderObject = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
-
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshiBuilderObject))
-    .baseUrl(BASE_URL)
-    .build()
-
 interface MovieApiService {
     @GET("popular")
-    fun getMovies(@Query("api_key") key: String): Call<MovieProperties>
+    suspend fun getAllMovies(@Query("api_key") key: String): Response<MovieProperties>
 
     @GET("{id}/reviews")
-    fun getReviews(
+    suspend fun getAllReviews(
         @Path("id") id: String,
         @Query("api_key") api_key: String
-    ): Call<ReviewProperties>
+    ): Response<ReviewProperties>
 
     @GET("{id}/videos")
-    fun getTrailers(
+    suspend fun getAllTrailers(
         @Path("id") id: String,
         @Query("api_key") api_key: String
-    ): Call<TrailerProperties>
-}
-
-object MovieApi {
-    val retrofitService: MovieApiService by lazy { retrofit.create(MovieApiService::class.java) }
+    ): Response<TrailerProperties>
 }
