@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomePageViewModel @Inject constructor(val repository: MovieRepository) : ViewModel() {
+class HomePageViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
     private var _serverResponse = MutableLiveData<String>()
     val serverResponse: LiveData<String> = _serverResponse
 

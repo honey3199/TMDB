@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +17,6 @@ import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.MovieReviewAdapter
 import com.example.mymovielibrary.adapter.MovieTrailerAdapter
 import com.example.mymovielibrary.clickListenerInterface.TrailerClickListener
-import com.example.mymovielibrary.data.repositoryImplementation.MovieRepositoryImpl
-import com.example.mymovielibrary.databse.MovieDatabase
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.viewModelFactory.ViewModelFactory
 import dagger.android.support.DaggerFragment

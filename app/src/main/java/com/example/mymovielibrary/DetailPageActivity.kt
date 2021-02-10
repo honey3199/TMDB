@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -13,9 +12,6 @@ import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.ui.descriptionPage.DetailPageViewModel
 import com.example.mymovielibrary.viewModelFactory.ViewModelFactory
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import dagger.android.AndroidInjection
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -35,8 +31,8 @@ class DetailPageActivity : DaggerAppCompatActivity() {
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.detail_toolbar)
         setSupportActionBar(toolbar)
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)?.title = movie?.title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        supportActionBar?.setDisplayShowHomeEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val viewModel: DetailPageViewModel by viewModels {
             viewModelFactory
@@ -60,7 +56,7 @@ class DetailPageActivity : DaggerAppCompatActivity() {
                 applicationContext,
                 R.drawable.favorite_border
             )
-        );
+        )
 
         viewModel.isMovieExist.observe(this) {
             if (it)

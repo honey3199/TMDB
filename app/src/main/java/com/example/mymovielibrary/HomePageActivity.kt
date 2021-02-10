@@ -1,7 +1,6 @@
 package com.example.mymovielibrary
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
