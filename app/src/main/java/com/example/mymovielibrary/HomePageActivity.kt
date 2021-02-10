@@ -1,7 +1,7 @@
 package com.example.mymovielibrary
 
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
+import com.example.mymovielibrary.databinding.ActivityMainBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
@@ -14,9 +14,13 @@ class HomePageActivity : DaggerAppCompatActivity(), HasAndroidInjector {
 
     override fun androidInjector() = activityInjector
 
+    private lateinit var homePageBinding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        findViewById<Toolbar>(R.id.toolbar_main_activity)?.title = getString(R.string.app_name)
+        homePageBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(homePageBinding.root)
+        with(homePageBinding) {
+            toolbarMainActivity.title = getString(R.string.app_name)
+        }
     }
 }

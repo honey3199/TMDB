@@ -8,15 +8,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mymovielibrary.R
 import com.example.mymovielibrary.adapter.MovieReviewAdapter
 import com.example.mymovielibrary.adapter.MovieTrailerAdapter
 import com.example.mymovielibrary.clickListenerInterface.TrailerClickListener
+import com.example.mymovielibrary.databinding.DetailPageFragmentBinding
 import com.example.mymovielibrary.model.Movie
 import com.example.mymovielibrary.viewModelFactory.ViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -29,11 +27,17 @@ class DetailPageFragment : DaggerFragment(), TrailerClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    private var _detailPageFragmentBinding: DetailPageFragmentBinding? = null
+    private val detailPageFragmentBinding get() = _detailPageFragmentBinding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.detail_page_fragment, container, false)
+    ): View {
+        //View Binding
+        _detailPageFragmentBinding = DetailPageFragmentBinding.inflate(inflater, container, false)
+        val view = detailPageFragmentBinding.root
+
         val viewModel: DetailPageViewModel by viewModels {
             viewModelFactory
         }
@@ -41,28 +45,24 @@ class DetailPageFragment : DaggerFragment(), TrailerClickListener {
         val extras: Bundle? = requireActivity().intent.extras
         movie = extras?.getParcelable("movie_id")
 
-        val movieTitle = view.findViewById<TextView>(R.id.movie_title)
-        val movieReleasingYear = view.findViewById<TextView>(R.id.movie_year)
-        val movieRating = view.findViewById<RatingBar>(R.id.movie_rating)
-        val movieSynopsis = view.findViewById<TextView>(R.id.text_synopsis)
-
-        movieTitle.text = movie?.title
-        movieReleasingYear.text = movie?.release_date
+        detailPageFragmentBinding.movieTitle.text = movie?.title
+        detailPageFragmentBinding.movieYear.text = movie?.release_date
         if (movie != null) {
-            movieRating.rating = (movie?.vote_average?.toFloat()?.div(2.0))?.toFloat() ?: 0.0f
+            detailPageFragmentBinding.movieRating.rating =
+                (movie?.vote_average?.toFloat()?.div(2.0))?.toFloat() ?: 0.0f
         }
 
-        movieSynopsis.text = movie?.overview
+        detailPageFragmentBinding.textSynopsis.text = movie?.overview
 
         val trailerAdapter = MovieTrailerAdapter(this)
-        val recyclerViewTrailer: RecyclerView = view.findViewById(R.id.recycler_view_for_trailers)
+        val recyclerViewTrailer: RecyclerView = detailPageFragmentBinding.recyclerViewForTrailers
         recyclerViewTrailer.adapter = trailerAdapter
         recyclerViewTrailer.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerViewTrailer.smoothScrollBy(0, 0)
 
         val reviewAdapter = MovieReviewAdapter()
-        val recyclerViewReview: RecyclerView = view.findViewById(R.id.recycler_view_for_reviews)
+        val recyclerViewReview: RecyclerView = detailPageFragmentBinding.recyclerViewForReviews
         recyclerViewReview.adapter = reviewAdapter
         recyclerViewReview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
